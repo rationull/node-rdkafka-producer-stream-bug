@@ -1,3 +1,5 @@
+// Repro example for https://github.com/Blizzard/node-rdkafka/issues/320
+
 "use strict";
 
 const kafka = require('node-rdkafka');
@@ -81,5 +83,9 @@ function write() {
    });
 }
 
+// Calling write() results in all messages being written to Kafka.
 //write();
+
+// Calling pipe() will only sometimes result in messages being written to Kafka,
+// presumably due to lack of a flush() call.
 pipe();
